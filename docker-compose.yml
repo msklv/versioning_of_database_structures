@@ -1,0 +1,19 @@
+version: '3.1'
+
+services:
+  db:
+    image: postgres:14
+    #env_file: .env-dev
+    restart: always
+    #container_name: test_pg_db
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: example
+      POSTGRES_USER: example_user
+      POSTGRES_DB: example_db
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+volumes:
+  db_data:
