@@ -14,7 +14,21 @@ services:
       POSTGRES_DB: example_db
     volumes:
       - db_data:/var/lib/postgresql/data
-      - ./init.sql:/docker-entrypoint-initdb.d/create_tables.sql:ro
+    #  - ./init.sql:/docker-entrypoint-initdb.d/create_tables.sql:ro
+
+
+  liquibase:
+    image: liquibase/liquibase
+    volumes:
+      - ./liquibase/changelog/:/liquibase/changelog/
+    depends_on:
+      - db
+    command:
+      - --url=jdbc:postgresql://db:5432/example_db
+      - --changeLogFile=/liquibase/changelog/changelog.xml
+      - --username=example_user
+      - --password=example
+      - update
 
 volumes:
   db_data:
