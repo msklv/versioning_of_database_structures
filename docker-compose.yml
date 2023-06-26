@@ -27,7 +27,8 @@ services:
       - db
     command:
       - --url=jdbc:postgresql://db:5432/example_db
-      - --changeLogFile=/liquibase/changelog/changelog.xml
+      #- --changeLogFile=/liquibase/changelog/changelog.xml
+      - --changeLogFile=/liquibase/changelog/changelog.yaml
       - --username=example_user
       - --password=example
       - generateChangeLog

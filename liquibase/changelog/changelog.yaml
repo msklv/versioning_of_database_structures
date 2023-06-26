@@ -1,0 +1,40 @@
+databaseChangeLog:
+- changeSet:
+    id: 1687817462161-1
+    author: liquibase (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: users_pkey
+            name: id
+            startWith: 5
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+            name: name
+            type: VARCHAR(100)
+        - column:
+            constraints:
+              nullable: false
+            name: email
+            type: VARCHAR(100)
+        - column:
+            defaultValueComputed: CURRENT_TIMESTAMP
+            name: created_at
+            type: TIMESTAMP WITH TIME ZONE
+        tableName: users
+- changeSet:
+    id: 1687817462161-2
+    author: liquibase (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: email
+        constraintName: users_email_key
+        tableName: users
+
