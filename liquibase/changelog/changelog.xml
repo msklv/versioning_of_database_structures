@@ -1,37 +1,20 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<databaseChangeLog
-  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
-                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
-
-    <changeSet id="1" author="your_name">
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet author="liquibase (generated)" id="1687813420901-1">
         <createTable tableName="users">
-            <column name="id" type="int">
-                <constraints primaryKey="true" nullable="false"/>
+            <column autoIncrement="true" name="id" startWith="5" type="INTEGER">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="users_pkey"/>
             </column>
-            <column name="name" type="varchar(100)">
+            <column name="name" type="VARCHAR(100)">
                 <constraints nullable="false"/>
             </column>
-            <column name="email" type="varchar(100)">
-                <constraints nullable="false" unique="true"/>
-            </column>
-            <column name="created_at" type="timestamp" defaultValueComputed="CURRENT_TIMESTAMP">
+            <column name="email" type="VARCHAR(100)">
                 <constraints nullable="false"/>
             </column>
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="created_at" type="TIMESTAMP WITH TIME ZONE"/>
         </createTable>
     </changeSet>
-
-    <changeSet id="2" author="your_name">
-        <insert tableName="users">
-            <column name="name" value="John Doe"/>
-            <column name="email" value="john.doe@example.com"/>
-        </insert>
-        <insert tableName="users">
-            <column name="name" value="Jane Doe"/>
-            <column name="email" value="jane.doe@example.com"/>
-        </insert>
+    <changeSet author="liquibase (generated)" id="1687813420901-2">
+        <addUniqueConstraint columnNames="email" constraintName="users_email_key" tableName="users"/>
     </changeSet>
-
 </databaseChangeLog>

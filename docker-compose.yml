@@ -14,13 +14,15 @@ services:
       POSTGRES_DB: example_db
     volumes:
       - db_data:/var/lib/postgresql/data
-    #  - ./init.sql:/docker-entrypoint-initdb.d/create_tables.sql:ro
+      - ./init.sql:/docker-entrypoint-initdb.d/create_tables.sql:ro
+    networks:
+      - mynetwork    
 
 
   liquibase:
-    image: liquibase/liquibase
+    image: liquibase/liquibase:4.21.1
     volumes:
-      - ./liquibase/changelog/:/liquibase/changelog/
+      - ./liquibase/changelog:/liquibase/changelog
     depends_on:
       - db
     command:
@@ -28,7 +30,16 @@ services:
       - --changeLogFile=/liquibase/changelog/changelog.xml
       - --username=example_user
       - --password=example
-      - update
+      - generateChangeLog
+      #- diffChangeLog
+      #- update
+      #- updateSQL > /liquibase/changelog/changelog.sql
+    networks:
+      - mynetwork  
+
 
 volumes:
   db_data:
+
+networks:
+  mynetwork:
