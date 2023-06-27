@@ -1,19 +1,19 @@
 version: '3.1'
 
 services:
-  db:
+#///////////////////////////  liquibase  //////////////////////////////////
+  dbl:
     image: postgres:14
     #env_file: .env-dev
     restart: always
-    #container_name: test_pg_db
     ports:
-      - 5432:5432
+      - 5532:5432
     environment:
-      POSTGRES_PASSWORD: example
-      POSTGRES_USER: example_user
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
       POSTGRES_DB: example_db
     volumes:
-      - db_data:/var/lib/postgresql/data
+      - db_data_l:/var/lib/postgresql/data
       - ./init.sql:/docker-entrypoint-initdb.d/create_tables.sql:ro
     networks:
       - mynetwork    
@@ -24,13 +24,13 @@ services:
     volumes:
       - ./liquibase/changelog:/liquibase/changelog
     depends_on:
-      - db
+      - dbl
     command:
-      - --url=jdbc:postgresql://db:5432/example_db
+      - --url=jdbc:postgresql://dbl:5432/example_db
       #- --changeLogFile=/liquibase/changelog/changelog.xml
       - --changeLogFile=/liquibase/changelog/changelog.yaml
-      - --username=example_user
-      - --password=example
+      - --username=postgres
+      - --password=postgres
       #- generateChangeLog
       #- diffChangeLog
       #- update
@@ -40,8 +40,42 @@ services:
       - mynetwork  
 
 
+#///////////////////////////  flyway  //////////////////////////////////
+  dbf:
+    image: postgres:15
+    #env_file: .env-dev
+    restart: always
+    ports:
+      - 5632:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: mydatabase
+    volumes:
+      - db_data_f:/var/lib/postgresql/data
+    networks:
+      - mynetwork
+
+  flyway:
+    image: flyway/flyway
+    depends_on:
+      - dbf
+    volumes:
+      - ./flyway/sql:/flyway/sql
+    command: -url=jdbc:postgresql://dbf:5432/mydatabase -user=postgres -password=postgres migrate
+    environment:
+      WAIT_HOSTS: dbf:5432
+    networks:
+      - mynetwork    
+
+
 volumes:
-  db_data:
+  db_data_l:
+  db_data_f:
 
 networks:
   mynetwork:
+
+
+#\\\\\  Доделать  \\\\\\
+# -  Спрятать логины и палоли в переменные
