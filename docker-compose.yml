@@ -31,10 +31,11 @@ services:
       - --changeLogFile=/liquibase/changelog/changelog.yaml
       - --username=example_user
       - --password=example
-      - generateChangeLog
+      #- generateChangeLog
       #- diffChangeLog
       #- update
-      #- updateSQL > /liquibase/changelog/changelog.sql
+      - --help
+      #- updateSQL #> /liquibase/changelog/changelog.sql
     networks:
       - mynetwork  
 
