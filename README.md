@@ -1,25 +1,25 @@
-# versioning_of_database_structures
-Версионирование сруктур баз данных
+# Versioning of database structures
 
-## Исследуемые системы 
+
+## Systems under consideration
  - [Liquibase](https://www.liquibase.org)
  - [FlyWay](http://flywaydb.org)
 
-## Процесс
-![versioning of database structures](img/versioning_of_database_structures.jpg)
+## The process
+![Versioning of database structures](img/versioning_of_database_structures.jpg)
 
 
-## Запуск и остановка
+## Startup and shutdown
 ```bash
 
 # Start
 docker compose up
 
-# Stop
+# Shutdown
 docker compose down
 
 ```
  
 
-## Лицензия 
+## License 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
