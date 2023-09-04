@@ -6,18 +6,23 @@
  - [FlyWay](http://flywaydb.org)
 
 ## The process
+Формат хранениея изменений - SQL
 ![Versioning of database structures](img/versioning_of_database_structures.jpg)
 
 
 ## Startup and shutdown
-```bash
 
+### Start/Stop DB
+```bash
 # Start
 docker compose up
 
 # Shutdown
 docker compose down
-
+```
+### Liquibase
+```bash
+liquibase update
 ```
  
 

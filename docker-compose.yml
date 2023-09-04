@@ -1,13 +1,12 @@
 version: '3.1'
 
 services:
-#///////////////////////////  liquibase  //////////////////////////////////
   dbl:
     image: postgres:14
     #env_file: .env-dev
     restart: always
     ports:
-      - 5532:5432
+      - 5432:5432
     environment:
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
@@ -16,66 +15,10 @@ services:
       - db_data_l:/var/lib/postgresql/data
       #- ./liquibase/changelog/init.sql:/docker-entrypoint-initdb.d/create_tables.sql:ro
     networks:
-      - mynetwork    
-
-
-  liquibase:
-    image: liquibase/liquibase:4.21.1
-    volumes:
-      - ./liquibase/changelog:/changelog
-    depends_on:
-      - dbl
-    command:
-      - --url=jdbc:postgresql://dbl:5432/example_db
-      #- --changeLogFile=/liquibase/changelog/gen_changelog.xml
-      #- --changeLogFile=/liquibase/changelog/gen_changelog.yaml
-      - --changeLogFile=/changelog/main.yaml
-      - --username=postgres
-      - --password=postgres
-      #- generateChangeLog
-      #- diffChangeLog
-      - update
-      #- updateSQL #> /liquibase/changelog/changelog.sql
-    networks:
-      - mynetwork  
-
-
-#///////////////////////////  flyway  //////////////////////////////////
-  dbf:
-    image: postgres:15
-    #env_file: .env-dev
-    restart: always
-    ports:
-      - 5632:5432
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: mydatabase
-    volumes:
-      - db_data_f:/var/lib/postgresql/data
-    networks:
       - mynetwork
-
-  flyway:
-    image: flyway/flyway
-    depends_on:
-      - dbf
-    volumes:
-      - ./flyway/sql:/flyway/sql
-    command: -url=jdbc:postgresql://dbf:5432/mydatabase -user=postgres -password=postgres migrate
-    environment:
-      WAIT_HOSTS: dbf:5432
-    networks:
-      - mynetwork    
-
 
 volumes:
   db_data_l:
-  db_data_f:
 
 networks:
   mynetwork:
-
-
-#\\\\\  Доделать  \\\\\\
-# -  Спрятать логины и палоли в переменные
