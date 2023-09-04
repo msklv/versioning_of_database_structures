@@ -19,6 +19,7 @@ docker compose up
 
 # Shutdown
 docker compose down
+docker volume rm versioning_of_database_structures_github_db_data_l
 ```
 ### Liquibase
 ```bash
