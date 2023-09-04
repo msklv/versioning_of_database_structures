@@ -1,0 +1,10 @@
+databaseChangeLog:
+  - include:
+      file: sql/my-table.sql
+      relativeToChangelogFile: true
+  - include:
+      file: sql/my-table-upd.sql
+      relativeToChangelogFile: true
+  - include:
+      file: sql/my-table-upd-test.sql
+      relativeToChangelogFile: true      

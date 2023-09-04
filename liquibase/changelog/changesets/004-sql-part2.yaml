@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - include:
+      file: sql/my-table2.sql
+      relativeToChangelogFile: true
+  - include:
+      file: sql/my-table2-upd.sql
+      relativeToChangelogFile: true
